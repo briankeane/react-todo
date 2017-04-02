@@ -20,7 +20,7 @@ var ToDoSearch = React.createClass({
           </label>
         </div>
       </div>
-      )
+      );
   }
 });
 
