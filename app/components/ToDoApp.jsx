@@ -1,5 +1,6 @@
 var React = require('react');
 var ToDoList = require('ToDoList');
+var AddToDoForm = require('AddToDoForm');
 
 var ToDoApp = React.createClass({
   getInitialState: function () {
@@ -21,13 +22,27 @@ var ToDoApp = React.createClass({
       ]
     }
   },
-
+  handleAddToDo: function (text) {
+    var newToDos = this.state.todos;
+    newToDos.push({
+          id: this.state.todos[this.state.todos.length-1].id + 1,
+          text: text
+        });
+    this.setState({
+      todos: newToDos
+      });
+  },
   render: function () {
     var {todos} = this.state;
 
     return (
       <div>
-        <ToDoList todos={todos}/>
+        <div className="row">
+          <div className="column small-centered medium-6 large-4">
+            <ToDoList todos={todos}/>
+            <AddToDoForm onAddToDo={this.handleAddToDo} />
+          </div>
+        </div>
       </div>
       );
   }
