@@ -2,73 +2,62 @@ var React = require('react');
 var uuid = require('node-uuid');
 var moment = require('moment');
 
+import TodoList from 'TodoList';
+import AddTodo from 'AddTodo';
+import TodoSearch from 'TodoSearch';
+var TodoApi = require('TodoApi');
 
-var ToDoList = require('ToDoList');
-var AddToDoForm = require('AddToDoForm');
-var ToDoSearch = require('ToDoSearch');
-var ToDoAPI = require('ToDoAPI');
-
-var ToDoApp = React.createClass({
+var TodoApp = React.createClass({
   getInitialState: function () {
     return {
       showCompleted: false,
       searchText: '',
-      todos: ToDoAPI.getToDos()
-    }
+      todos: TodoApi.getTodos()
+    };
   },
   componentDidUpdate: function () {
-    ToDoAPI.setToDos(this.state.todos);
+    TodoApi.setTodos(this.state.todos);
   },
-  handleToDoSearch: function (showCompleted, searchText) {
-    this.setState({
-      showCompleted: showCompleted,
-      searchText: searchText.toLowerCase()
-    });
-  },
-  handleAddToDo: function (text) {
+  handleAddTodo: function (text) {
     this.setState({
       todos: [
         ...this.state.todos,
-        { id: uuid(),
+        {
+          id: uuid(),
           text: text,
           completed: false,
           createdAt: moment().unix(),
           completedAt: undefined
         }
-        ]
-      });
-  },
-  handleToggle: function (id) {
-    var updatedTodDos = this.state.todos.map((item) => {
-      if (item.id == id) {
-        item.completed = !item.completed;
-        item.completedAt = item.completed ? moment().unix() : undefined;
-      }
-      return item; 
+      ]
     });
+  },
+  handleSearch: function (showCompleted, searchText) {
     this.setState({
-      todo: updatedTodDos
+      showCompleted: showCompleted,
+      searchText: searchText.toLowerCase()
     });
   },
   render: function () {
     var {todos, showCompleted, searchText} = this.state;
-    var filteredToDos = ToDoAPI.filterToDos(todos, showCompleted, searchText);
+    var filteredTodos = TodoApi.filterTodos(todos, showCompleted, searchText);
+
     return (
       <div>
-        <h1 className="page-title">ToDo App</h1>
+        <h1 className="page-title">Todo App</h1>
+
         <div className="row">
           <div className="column small-centered small-11 medium-6 large-5">
             <div className="container">
-              <ToDoSearch onSearch={this.handleToDoSearch}/>
-              <ToDoList todos={filteredToDos} onToggle={this.handleToggle}/>
-              <AddToDoForm onAddToDo={this.handleAddToDo} />
+              <TodoSearch onSearch={this.handleSearch}/>
+              <TodoList/>
+              <AddTodo onAddTodo={this.handleAddTodo}/>
             </div>
           </div>
         </div>
       </div>
-      );
+    )
   }
 });
 
-
-module.exports = ToDoApp;
+module.exports = TodoApp;

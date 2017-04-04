@@ -8,10 +8,10 @@ module.exports = function (config) {
     files: [
       'node_modules/jquery/dist/jquery.min.js',
       'node_modules/foundation-sites/dist/foundation.min.js',
-      'app/tests/**/*.tests.jsx'
-      ],
+      'app/tests/**/*.test.jsx'
+    ],
     preprocessors: {
-      'app/tests/**/*.tests.jsx': ['webpack','sourcemap']
+      'app/tests/**/*.test.jsx': ['webpack', 'sourcemap']
     },
     reporters: ['mocha'],
     client: {
@@ -24,4 +24,4 @@ module.exports = function (config) {
       noInfo: true
     }
   });
-}
+};

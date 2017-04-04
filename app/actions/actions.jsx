@@ -1,25 +1,26 @@
 export var setSearchText = (searchText) => {
   return {
     type: 'SET_SEARCH_TEXT',
-    searchText: searchText
+    searchText
   };
 };
 
-export var addToDo = (text) => {
-  return {
-    type: 'ADD_TODO',
-    text: text
-  };
-}
-
-export var toggleShowCompleted = (text) => {
+export var toggleShowCompleted = () => {
   return {
     type: 'TOGGLE_SHOW_COMPLETED'
   };
-}
+};
 
-export var toggleToDo = (text) => {
+export var addTodo = (text) => {
   return {
-    type: 'TOGGLE_TODO'
+    type: 'ADD_TODO',
+    text
   };
-}
+};
+
+export var toggleTodo = (id) => {
+  return {
+    type: 'TOGGLE_TODO',
+    id
+  };
+};

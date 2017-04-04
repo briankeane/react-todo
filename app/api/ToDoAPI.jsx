@@ -1,46 +1,40 @@
+var $ = require('jquery');
+
 module.exports = {
-  setToDos: function (toDos) {
-    if ($.isArray(toDos)) {
-      localStorage.setItem('todos', JSON.stringify(toDos));
-      return toDos;
+  setTodos: function (todos) {
+    if ($.isArray(todos)) {
+      localStorage.setItem('todos', JSON.stringify(todos));
+      return todos;
     }
   },
-  getToDos: function () {
-    var stringToDos = localStorage.getItem('todos');
-    var toDos = [];
+  getTodos: function () {
+    var stringTodos = localStorage.getItem('todos');
+    var todos = [];
 
     try {
-      toDos = JSON.parse(stringToDos);
+      todos = JSON.parse(stringTodos);
     } catch (e) {
 
     }
-    if ($.isArray(toDos)) {
-      return toDos;
-    }
-    else
-    {
-      return []; 
-    }
-  },
-  filterToDos: function (toDos, showCompleted, searchText) {
-    var filteredToDos = toDos;
 
-    // filter by showCompleted
-    filteredToDos = filteredToDos.filter((item) => { 
-      return !item.completed || showCompleted;
+    return $.isArray(todos) ? todos : [];
+  },
+  filterTodos: function (todos, showCompleted, searchText) {
+    var filteredTodos = todos;
+
+    // Filter by showCompleted
+    filteredTodos = filteredTodos.filter((todo) => {
+      return !todo.completed || showCompleted;
     });
 
-    // filter by searchText
-    if (searchText.length > 0) {
-      filteredToDos = filteredToDos.filter((item) => {
-        if (item.text.toLowerCase().indexOf(searchText.toLowerCase()) !== -1) {
-          return true
-        }
-        return false
-      });
-    }
-    // sort toDos with nonCompleted first
-    filteredToDos.sort((a, b) => {
+    // Filter by searchText
+    filteredTodos = filteredTodos.filter((todo) => {
+      var text = todo.text.toLowerCase();
+      return searchText.length === 0 || text.indexOf(searchText) > -1;
+    });
+
+    // Sort todos with non-completed first
+    filteredTodos.sort((a, b) => {
       if (!a.completed && b.completed) {
         return -1;
       } else if (a.completed && !b.completed) {
@@ -50,6 +44,6 @@ module.exports = {
       }
     });
 
-    return filteredToDos;
+    return filteredTodos;
   }
 };
