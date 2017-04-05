@@ -7,7 +7,7 @@ var $ = require('jquery');
 
 import {configure} from 'configureStore';
 import ConnectedTodoList, {TodoList} from 'TodoList';
-import ConnectedTodo, {Todo} from 'Todo';
+import ConnectedTodo, {Todo} from 'Todo'
 
 describe('TodoList', () => {
   it('should exist', () => {
@@ -28,16 +28,14 @@ describe('TodoList', () => {
       completedAt: undefined,
       createdAt: 500
     }];
-
     var store = configure({
-      todos: todos
+      todos
     });
     var provider = TestUtils.renderIntoDocument(
       <Provider store={store}>
         <ConnectedTodoList/>
       </Provider>
     );
-
     var todoList = TestUtils.scryRenderedComponentsWithType(provider, ConnectedTodoList)[0];
     var todosComponents = TestUtils.scryRenderedComponentsWithType(todoList, ConnectedTodo);
 

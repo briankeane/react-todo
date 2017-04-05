@@ -1,6 +1,5 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-
 var TestUtils = require('react-addons-test-utils');
 var expect = require('expect');
 var $ = require('jquery');
@@ -13,13 +12,14 @@ describe('Todo', () => {
     expect(Todo).toExist();
   });
 
-  it('should dispatch UPDATE_TODO action on click', () => {
+  it('should dispatch TOGGLE_TODO action on click', () => {
     var todoData = {
       id: 199,
       text: 'Write todo.test.jsx test',
       completed: true
     };
-    var action = actions.startToggleTodo(todoData.id, todoData.completed);
+    var action = actions.startToggleTodo(todoData.id, !todoData.completed);
+
     var spy = expect.createSpy();
     var todo = TestUtils.renderIntoDocument(<Todo {...todoData} dispatch={spy}/>);
     var $el = $(ReactDOM.findDOMNode(todo));
